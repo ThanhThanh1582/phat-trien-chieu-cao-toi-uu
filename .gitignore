@@ -1,0 +1,10 @@
+# PowerShell scripts (optional to exclude)
+# *.ps1
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
