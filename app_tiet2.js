@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('t2-poster-score', scoreValue);
       localStorage.setItem('t2-poster-feedback', comment);
       
-      alert(`Nghiệm thu thành công! Poster được phê duyệt với số điểm: ${scoreValue}/10.\nNhận xét: "${comment}"`);
+      showCustomAlert(`Nghiệm thu thành công! Poster được phê duyệt với số điểm: <strong>\${scoreValue}/10</strong>.<br>Nhận xét: <em>"\${comment}"</em>`, '📋', 'Nghiệm thu poster');
     });
   }
 
