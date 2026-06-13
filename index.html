@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Học Viện Bác Sĩ Nhí - Tiết 1: Bác Sĩ Khám Bệnh | Nova Hospital</title>
+  <title>Cổng Học Tập - Học Viện Bác Sĩ Nhí | Nova Hospital</title>
   
   <!-- SEO Meta Tags -->
-  <meta name="description" content="Hệ thống slide giảng dạy tương tác 20 trang với chủ đề phát triển chiều cao tối ưu, mô phỏng hoạt động phòng khám lâm sàng y khoa.">
+  <meta name="description" content="Hệ thống slide giảng dạy tương tác - Phát triển chiều cao tối ưu - Bệnh viện Nova Hospital.">
   
   <!-- Icon & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,15 +14,369 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css">
+  <style>
+    :root {
+      --bg-dark: linear-gradient(135deg, #f0f4f8 0%, #cbd5e1 100%);
+      --bg-card: rgba(255, 255, 255, 0.85);
+      --bg-card-hover: rgba(255, 255, 255, 1);
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --accent-navy: #1A365D;
+      --accent-mint: #008080;
+      --accent-mint-glow: rgba(0, 128, 128, 0.15);
+      --accent-red: #C53030;
+      --panel-border: rgba(0, 0, 0, 0.08);
+      --panel-border-hover: rgba(0, 128, 128, 0.3);
+      --radius-lg: 20px;
+      --radius-md: 12px;
+      --font-main: 'Inter', sans-serif;
+      --font-accent: 'Montserrat', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background Glow Spheres */
+    .bg-glow-sphere {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-mint-glow) 0%, rgba(255, 255, 255, 0) 70%);
+      filter: blur(50px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    .sphere-1 { top: -100px; left: -100px; }
+    .sphere-2 { bottom: -150px; right: -100px; }
+
+    /* Header */
+    .app-header {
+      width: 100%;
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--panel-border);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .hospital-logo {
+      width: 44px;
+      height: 44px;
+      background: var(--accent-mint);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0 0 15px var(--accent-mint-glow);
+    }
+
+    .brand-text h1 {
+      font-family: var(--font-accent);
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      color: var(--accent-navy);
+      line-height: 1.1;
+    }
+
+    .brand-text p {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-mint);
+      letter-spacing: 2px;
+      margin-top: 2px;
+    }
+
+    .header-tag {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: rgba(0,0,0,0.03);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--panel-border);
+    }
+
+    /* Main Content */
+    .main-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 40px 24px;
+      text-align: center;
+      z-index: 5;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .welcome-section h2 {
+      font-family: var(--font-accent);
+      font-weight: 900;
+      font-size: 42px;
+      background: linear-gradient(135deg, var(--accent-navy) 0%, var(--accent-mint) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .welcome-section p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .lesson-card {
+      background: var(--bg-card);
+      border: 1.5px solid var(--panel-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      text-align: left;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+
+    .lesson-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .lesson-card.card-tiet1::before { background: #3b82f6; }
+    .lesson-card.card-tiet2::before { background: var(--accent-mint); }
+    .lesson-card.card-tiet3::before { background: var(--accent-red); }
+
+    .lesson-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--panel-border-hover);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 0 30px rgba(0, 128, 128, 0.05);
+      background: var(--bg-card-hover);
+    }
+
+    .lesson-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .lesson-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .card-tiet1 .lesson-badge {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .card-tiet2 .lesson-badge {
+      background: rgba(0, 128, 128, 0.1);
+      color: var(--accent-mint);
+      border: 1px solid rgba(0, 128, 128, 0.2);
+    }
+
+    .card-tiet3 .lesson-badge {
+      background: rgba(197, 48, 48, 0.1);
+      color: var(--accent-red);
+      border: 1px solid rgba(197, 48, 48, 0.2);
+    }
+
+    .lesson-icon {
+      font-size: 32px;
+    }
+
+    .card-tiet1 .lesson-icon { color: #3b82f6; }
+    .card-tiet2 .lesson-icon { color: var(--accent-mint); }
+    .card-tiet3 .lesson-icon { color: var(--accent-red); }
+
+    .lesson-details h3 {
+      font-family: var(--font-accent);
+      font-weight: 800;
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--accent-navy);
+    }
+
+    .lesson-details .lesson-subtitle {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent-mint);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .lesson-details p.desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      min-height: 72px;
+    }
+
+    .lesson-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 32px;
+      padding-left: 2px;
+    }
+
+    .lesson-features li {
+      font-size: 14px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .lesson-features li i {
+      font-size: 14px;
+    }
+    .card-tiet1 .lesson-features li i { color: #3b82f6; }
+    .card-tiet2 .lesson-features li i { color: var(--accent-mint); }
+    .card-tiet3 .lesson-features li i { color: var(--accent-red); }
+
+    .enter-btn {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      font-family: var(--font-accent);
+      font-weight: 700;
+      font-size: 15px;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .card-tiet1 .enter-btn {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+    }
+    .card-tiet1 .enter-btn:hover {
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card-tiet2 .enter-btn {
+      background: linear-gradient(135deg, #0d5c5a 0%, var(--accent-mint) 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(0, 128, 128, 0.2);
+    }
+    .card-tiet2 .enter-btn:hover {
+      box-shadow: 0 6px 20px rgba(0, 128, 128, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .card-tiet3 .enter-btn {
+      background: linear-gradient(135deg, #9b2c2c 0%, var(--accent-red) 100%);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.2);
+    }
+    .card-tiet3 .enter-btn:hover {
+      box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .app-footer {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+      border-top: 1.5px solid var(--panel-border);
+      font-size: 13px;
+      color: var(--text-muted);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 -2px 15px rgba(0,0,0,0.02);
+    }
+
+    @media (max-width: 768px) {
+      .welcome-section h2 {
+        font-size: 32px;
+      }
+      .lessons-grid {
+        grid-template-columns: 1fr;
+      }
+      .lesson-card {
+        padding: 30px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- Background Glow Spheres for sparkling visual effect -->
+  <!-- Background Glow Spheres -->
   <div class="bg-glow-sphere sphere-1"></div>
   <div class="bg-glow-sphere sphere-2"></div>
-  <div class="bg-glow-sphere sphere-3"></div>
 
-  <!-- App Header (Thanh đầu trang) -->
+  <!-- Header -->
   <header class="app-header">
     <div class="header-brand">
       <div class="hospital-logo"><i class="fa-solid fa-house-medical"></i></div>
@@ -31,900 +385,93 @@
         <p>HỌC VIỆN BÁC SĨ NHÍ</p>
       </div>
     </div>
-    
-    <div class="active-stage-indicator" id="current-stage-display">
-      TIẾT 1: BÁC SĨ KHÁM BỆNH
-    </div>
-    
-    <div class="header-actions">
-      <button class="action-btn" id="toggle-theme-btn" title="Chuyển Sáng/Tối">
-        <i class="fa-solid fa-moon"></i>
-      </button>
-      <button class="action-btn" id="toggle-fullscreen-btn" title="Trình chiếu toàn màn hình (F)">
-        <i class="fa-solid fa-expand"></i>
-      </button>
+    <div class="header-tag">
+      <i class="fa-solid fa-graduation-cap"></i> CHƯƠNG TRÌNH ĐÀO TẠO Y KHOA
     </div>
   </header>
 
-  <!-- Slides Viewport (Khung hiển thị slide) -->
-  <main class="slides-container" id="slides-viewport">
-    
-    <!-- SLIDE 1: TRANG BÌA (COVER SLIDE) -->
-    <section class="slide-panel active" id="slide-1" data-stage="Bắt đầu">
-      <div class="cover-layout">
-        <div class="cover-accent-line"></div>
-        <div class="cover-content">
-          <div class="department-tag">KHOA NHI KHOA &bull; NOVA HOSPITAL</div>
-          <h2 class="main-title">PHÁT TRIỂN CHIỀU CAO TỐI ƯU</h2>
-          <p class="subtitle">Chủ đề: Chăm sóc sức khỏe bản thân | Tiết 1: Bác sĩ khám bệnh</p>
-          
-          <div class="cover-footer">
-            <div class="role-badge">
-              <i class="fa-solid fa-user-doctor"></i> ĐỐI TƯỢNG TRẢI NGHIỆM: BÁC SĨ TẬP SỰ
-            </div>
-            <button class="start-lecture-btn" id="start-btn">
-              Bắt đầu ca trực <i class="fa-solid fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-        <div class="cover-illustration">
-          <div class="stethoscope-glow"><i class="fa-solid fa-stethoscope"></i></div>
-          <div class="heartbeat-line">
-            <svg viewBox="0 0 100 40" class="pulse-svg">
-              <path d="M0,20 L30,20 L38,5 L45,35 L52,15 L58,25 L65,20 L100,20" fill="none" stroke="var(--accent-mint)" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </section>
+  <!-- Main Content -->
+  <main class="main-container">
+    <div class="welcome-section">
+      <h2>Chào mừng Bác sĩ tập sự!</h2>
+      <p>Hãy lựa chọn bài học lâm sàng dưới đây để bắt đầu khám phá các yếu tố cốt lõi giúp phát triển chiều cao tối ưu ở tuổi dậy thì.</p>
+    </div>
 
-    <!-- ==========================================
-         HOẠT ĐỘNG 1: KHỞI ĐỘNG (SLIDE 2 - 6)
-         ========================================== -->
-         
-    <!-- Slide 2: Tên Hoạt động 1 -->
-    <section class="slide-panel" id="slide-2" data-stage="HĐ1: Khởi động">
-      <div class="activity-intro-layout color-green-theme">
-        <div class="intro-badge">HOẠT ĐỘNG 1</div>
-        <h2 class="intro-main-title">KHỞI ĐỘNG</h2>
-        <div class="intro-sub-card">
-          <span class="sub-label">Tên riêng trên Slide:</span>
-          <h3>GHÉP HỒ SƠ BỆNH ÁN</h3>
-        </div>
-        <div class="intro-icon-large"><i class="fa-solid fa-hospital-user"></i></div>
-        <div class="intro-duration"><i class="fa-regular fa-clock"></i> Thời lượng: 7 - 10 phút</div>
-      </div>
-    </section>
-
-    <!-- Slide 3: Chuẩn bị HĐ1 -->
-    <section class="slide-panel" id="slide-3" data-stage="HĐ1: Chuẩn bị">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 1 &bull; CHUẨN BỊ CHỌN CA LÂM SÀNG</span>
-        <h2 class="slide-title">Chuẩn Bị</h2>
-      </div>
-      <div class="grid-2-cols">
-        <div class="card glass-card focus-border animate-up">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-users"></i> HÌNH THỨC HOẠT ĐỘNG</h3>
-          <p class="description" style="margin-top: 15px; font-size: 18px;">Hoạt động theo: <strong>Cặp đôi / Cá nhân</strong></p>
-          <div class="illustration-badge"><i class="fa-solid fa-people-arrows"></i></div>
-        </div>
-        <div class="card glass-card animate-up" style="animation-delay: 0.1s;">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-toolbox"></i> ĐỒ DÙNG CẦN TRÊN BÀN</h3>
-          <ul class="bullet-list" style="margin-top: 15px;">
-            <li>Phiếu ghép hồ sơ bệnh án (đã in sẵn).</li>
-            <li>Bút chì, bút mực hoặc thước kẻ.</li>
-            <li>Sổ tay ghi chép thô của nhóm.</li>
+    <div class="lessons-grid">
+      <!-- TIẾT 1 CARD -->
+      <div class="lesson-card card-tiet1">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-badge">Phòng Khám Lâm Sàng</span>
+            <div class="lesson-icon"><i class="fa-solid fa-stethoscope"></i></div>
+          </div>
+          <div class="lesson-details">
+            <div class="lesson-subtitle">Vai trò: Bác sĩ khám bệnh</div>
+            <h3>Tiết 1: Chẩn Đoán Thói Quen</h3>
+            <p class="desc">Phân tích ca lâm sàng, thăm khám hồ sơ bệnh nhân thực tế để tìm ra thói quen chưa hợp lý ảnh hưởng đến chiều cao.</p>
+          </div>
+          <ul class="lesson-features">
+            <li><i class="fa-solid fa-circle-check"></i> Phân tích 5 bệnh án thực tế</li>
+            <li><i class="fa-solid fa-circle-check"></i> Ghép nối hồ sơ & chẩn đoán thói quen</li>
+            <li><i class="fa-solid fa-circle-check"></i> Ghi chép sổ tay mini & hội chẩn lâm sàng</li>
           </ul>
         </div>
+        <a href="tiet1.html" class="enter-btn">
+          <span>Bắt đầu Ca Trực</span> <i class="fa-solid fa-chevron-right"></i>
+        </a>
       </div>
-    </section>
 
-    <!-- Slide 4: Hướng dẫn HĐ1 + Matching Game + Countdown -->
-    <section class="slide-panel" id="slide-4" data-stage="HĐ1: Hướng dẫn">
-      <div class="slide-header-split">
-        <div class="slide-header">
-          <span class="breadcrumb">HOẠT ĐỘNG 1 &bull; HƯỚNG DẪN BƯỚC</span>
-          <h2 class="slide-title">Quan Sát & Thảo Luận</h2>
-        </div>
-        <!-- Timer Widget -->
-        <div class="timer-widget" id="timer-hd1">
-          <div class="timer-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-          <div class="timer-display">08:00</div>
-          <div class="timer-controls">
-            <button class="timer-btn play-btn" title="Bắt đầu"><i class="fa-solid fa-play"></i></button>
-            <button class="timer-btn pause-btn hidden" title="Tạm dừng"><i class="fa-solid fa-pause"></i></button>
-            <button class="timer-btn reset-btn" title="Đặt lại"><i class="fa-solid fa-rotate-left"></i></button>
+      <!-- TIẾT 2 CARD -->
+      <div class="lesson-card card-tiet2">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-badge">Chiến Dịch Cộng Đồng</span>
+            <div class="lesson-icon"><i class="fa-solid fa-people-group"></i></div>
           </div>
-        </div>
-      </div>
-      
-      <div class="interactive-matching-game">
-        <p class="game-instruction">
-          <i class="fa-solid fa-gamepad"></i> <strong>Ghép hồ sơ bác sĩ:</strong> Click chọn <strong>Bệnh nhân</strong> ở cột trái, rồi click vào <strong>Thói quen tương ứng</strong> ở cột phải để ghép nối!
-        </p>
-        
-        <div class="matching-container">
-          <!-- Bệnh nhân -->
-          <div class="matching-column" id="profiles-column">
-            <div class="match-item card-item" data-id="nut" id="profile-linhanh">
-              <div class="patient-card-header">
-                <img src="patient_linh_anh.png" alt="Linh Anh" class="patient-thumb-img">
-                <h4>BỆNH NHÂN: LINH ANH</h4>
-              </div>
-              <p class="item-desc">🥗 Ăn rất ít thịt cá, hầu như không uống sữa hoặc sữa chua. Thường xuyên ăn snack bim bim, đồ ăn vặt nhiều dầu mỡ.</p>
-              <div class="match-connection-point"></div>
-            </div>
-            <div class="match-item card-item" data-id="sleep" id="profile-kem">
-              <div class="patient-card-header">
-                <img src="patient_kem.png" alt="Bạn Kem" class="patient-thumb-img">
-                <h4>BỆNH NHÂN: KEM</h4>
-              </div>
-              <p class="item-desc">😴 Thường xuyên thức muộn đến 12h đêm để xem máy tính chơi game. Sáng hôm sau dậy rất muộn, cơ thể mệt mỏi uể oải.</p>
-              <div class="match-connection-point"></div>
-            </div>
-            <div class="match-item card-item" data-id="exercise" id="profile-namanh">
-              <div class="patient-card-header">
-                <img src="patient_nam_anh.png" alt="Nam Anh" class="patient-thumb-img">
-                <h4>BỆNH NHÂN: NAM ANH</h4>
-              </div>
-              <p class="item-desc">🏃 Hầu như không tham gia thể thao. Dành toàn bộ thời gian rảnh nằm chơi điện thoại. Ít đi lại, lười làm việc nhẹ.</p>
-              <div class="match-connection-point"></div>
-            </div>
+          <div class="lesson-details">
+            <div class="lesson-subtitle">Vai trò: Bác sĩ cộng đồng</div>
+            <h3>Tiết 2: Thay Đổi Hành Vi</h3>
+            <p class="desc">Khảo sát thực trạng thói quen xấu của tập thể, phân tích nguy cơ sức khỏe và thiết kế poster truyền thông thay đổi hành vi.</p>
           </div>
-          
-          <!-- Thói quen -->
-          <div class="matching-column" id="targets-column">
-            <div class="match-target" data-match="exercise" id="target-ex">
-              <div class="match-connection-point left"></div>
-              <div class="target-card">
-                <div class="target-icon"><i class="fa-solid fa-person-running"></i></div>
-                <h5>Lười Vận Động</h5>
-                <span class="match-status-badge">Chưa nối</span>
-              </div>
-            </div>
-            <div class="match-target" data-match="nut" id="target-nut">
-              <div class="match-connection-point left"></div>
-              <div class="target-card">
-                <div class="target-icon"><i class="fa-solid fa-apple-whole"></i></div>
-                <h5>Dinh Dưỡng Sai Lệch</h5>
-                <span class="match-status-badge">Chưa nối</span>
-              </div>
-            </div>
-            <div class="match-target" data-match="sleep" id="target-sleep">
-              <div class="match-connection-point left"></div>
-              <div class="target-card">
-                <div class="target-icon"><i class="fa-solid fa-moon"></i></div>
-                <h5>Thiếu Giấc Ngủ Ngon</h5>
-                <span class="match-status-badge">Chưa nối</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="discussion-banner glass-panel">
-        <span class="banner-star">❓</span>
-        <p><strong>Câu hỏi định hướng:</strong> Hãy thảo luận cặp đôi nhanh: Thói quen sinh hoạt chưa hợp lý của từng ca bệnh ảnh hưởng thế nào đến cơ thể?</p>
-      </div>
-    </section>
-
-    <!-- Slide 5: Đáp án HĐ1 -->
-    <section class="slide-panel" id="slide-5" data-stage="HĐ1: Đáp án">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 1 &bull; PHÂN TÍCH ĐÁP ÁN</span>
-        <h2 class="slide-title">Kết Quả Chẩn Đoán Lâm Sàng</h2>
-      </div>
-      <div class="grid-3-cols">
-        <div class="card glass-card border-orange-top">
-          <div class="card-head text-orange">🥗 DINH DƯỠNG LỖI</div>
-          <h4 style="font-size: 16px; margin: 10px 0;">Thiếu hụt canxi & đạm</h4>
-          <p class="description">Ăn vặt thay cơm làm trẻ tích tụ chất béo có hại nhưng lại thiếu trầm trọng nguồn Protein (đậm) cấu thành collagen đệm xương và Canxi kết tinh xương.</p>
-        </div>
-        <div class="card glass-card border-navy-top">
-          <div class="card-head text-navy">😴 GIẤC NGỦ LỖI</div>
-          <h4 style="font-size: 16px; margin: 10px 0;">Thiếu hụt Hormone sinh trưởng</h4>
-          <p class="description">Thức muộn sau 24h khiến cơ thể lỡ mất đỉnh bài tiết Hormone tăng trưởng (GH) của tuyến yên (vốn chỉ đạt mức cao nhất khi ngủ sâu giấc từ 23h - 2h sáng).</p>
-        </div>
-        <div class="card glass-card border-mint-top">
-          <div class="card-head text-mint">🏃 VẬN ĐỘNG LỖI</div>
-          <h4 style="font-size: 16px; margin: 10px 0;">Chậm cốt hóa & kéo dài sụn</h4>
-          <p class="description">Nằm thụ động làm giảm các kích thích lực nén lên sụn tiếp hợp ở đầu xương đùi, xương chày, từ đó giảm tốc độ phân chia tế bào sụn để tăng chiều dài.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 6: Tổng kết HĐ1 -->
-    <section class="slide-panel" id="slide-6" data-stage="HĐ1: Tổng kết">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 1 &bull; TỔNG KẾT KIẾN THỨC</span>
-        <h2 class="slide-title">3 Yếu Tố Cốt Lõi Quyết Định Chiều Cao</h2>
-      </div>
-      <div class="grid-layout-1-3">
-        <div class="card glass-card focus-border-mint">
-          <h3 class="headline-text text-navy" style="font-size: 24px;">KẾT LUẬN BAN ĐẦU</h3>
-          <p class="description">Chiều cao con người chịu ảnh hưởng to lớn từ lối sống sinh hoạt hàng ngày mà chính chúng ta có thể kiểm soát và thay đổi được.</p>
-        </div>
-        
-        <div class="factors-display-layout">
-          <div class="factor-block">
-            <span class="factor-badge red-bg">🥗 DINH DƯỠNG</span>
-            <p>Bổ sung chất đạm, canxi, vitamin D3 để làm nguyên liệu xây dựng xương dài ra.</p>
-          </div>
-          <div class="factor-block">
-            <span class="factor-badge navy-bg">😴 GIẤC NGỦ</span>
-            <p>Đi ngủ sớm trước 22h đêm để kích thích tuyến yên sản sinh lượng hoocmôn cao nhất.</p>
-          </div>
-          <div class="factor-block">
-            <span class="factor-badge mint-bg">🏃 VẬN ĐỘNG</span>
-            <p>Tập thể thao thường xuyên để kích thích đĩa sụn phân chia và kéo giãn khớp xương.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         HOẠT ĐỘNG 2: KHÁM BỆNH & HỘI CHẨN (SLIDE 7 - 12)
-         ========================================== -->
-         
-    <!-- Slide 7: Tên Hoạt động 2 -->
-    <section class="slide-panel" id="slide-7" data-stage="HĐ2: Nguyên nhân">
-      <div class="activity-intro-layout color-navy-theme">
-        <div class="intro-badge">HOẠT ĐỘNG 2</div>
-        <h2 class="intro-main-title">TRUY TÌM NGUYÊN NHÂN</h2>
-        <div class="intro-sub-card">
-          <span class="sub-label">Tên riêng trên Slide:</span>
-          <h3>KHÁM BỆNH & HỘI CHẨN</h3>
-        </div>
-        <div class="intro-icon-large"><i class="fa-solid fa-stethoscope"></i></div>
-        <div class="intro-duration"><i class="fa-regular fa-clock"></i> Thời lượng: 15 phút</div>
-      </div>
-    </section>
-
-    <!-- Slide 8: Chuẩn bị HĐ2 -->
-    <section class="slide-panel" id="slide-8" data-stage="HĐ2: Chuẩn bị">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 2 &bull; CHUẨN BỊ CA LÂM SÀNG</span>
-        <h2 class="slide-title">Chuẩn Bị</h2>
-      </div>
-      <div class="grid-2-cols">
-        <div class="card glass-card focus-border">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-users-viewfinder"></i> THÀNH LẬP HỘI ĐỒNG Y KHOA</h3>
-          <p class="description" style="margin-top: 15px; font-size: 18px;">Hoạt động theo: <strong>Nhóm 4 học sinh (Bác sĩ chuyên khoa)</strong></p>
-          <div class="illustration-badge"><i class="fa-solid fa-user-group"></i></div>
-        </div>
-        <div class="card glass-card" style="animation-delay: 0.1s;">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-file-medical"></i> HỒ SƠ VÀ DỤNG CỤ KHÁM</h3>
-          <ul class="bullet-list" style="margin-top: 15px;">
-            <li>Hồ sơ bệnh án chi tiết (5 ca bệnh nhân nhí của Nova Hospital).</li>
-            <li>Bút dạ màu hoặc bút highlighter (để đánh dấu thói quen lỗi).</li>
-            <li>Phiếu phân tích chẩn đoán của nhóm.</li>
+          <ul class="lesson-features">
+            <li><i class="fa-solid fa-circle-check"></i> Kéo thả phân loại thói quen y khoa</li>
+            <li><i class="fa-solid fa-circle-check"></i> Thảo luận nguy cơ duy trì thói quen xấu</li>
+            <li><i class="fa-solid fa-circle-check"></i> Thiết kế Poster truyền thông & Chấm điểm</li>
           </ul>
         </div>
+        <a href="tiet2.html" class="enter-btn">
+          <span>Bắt đầu Chiến dịch</span> <i class="fa-solid fa-chevron-right"></i>
+        </a>
       </div>
-    </section>
 
-    <!-- Slide 9: Hướng dẫn HĐ2 + Flowchart + Timer -->
-    <section class="slide-panel" id="slide-9" data-stage="HĐ2: Hướng dẫn">
-      <div class="slide-header-split">
-        <div class="slide-header">
-          <span class="breadcrumb">HOẠT ĐỘNG 2 &bull; HƯỚNG DẪN KHÁM LÂM SÀNG</span>
-          <h2 class="slide-title">Khám Bệnh & Chẩn Đoán</h2>
-        </div>
-        <!-- Timer Widget -->
-        <div class="timer-widget" id="timer-hd2">
-          <div class="timer-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-          <div class="timer-display">15:00</div>
-          <div class="timer-controls">
-            <button class="timer-btn play-btn" title="Bắt đầu"><i class="fa-solid fa-play"></i></button>
-            <button class="timer-btn pause-btn hidden" title="Tạm dừng"><i class="fa-solid fa-pause"></i></button>
-            <button class="timer-btn reset-btn" title="Đặt lại"><i class="fa-solid fa-rotate-left"></i></button>
+      <!-- TIẾT 3 CARD -->
+      <div class="lesson-card card-tiet3">
+        <div>
+          <div class="lesson-meta">
+            <span class="lesson-badge">Tuyên Truyền Thực Địa</span>
+            <div class="lesson-icon"><i class="fa-solid fa-bullhorn"></i></div>
           </div>
-        </div>
-      </div>
-      
-      <div class="instruction-flow-layout">
-        <div class="flowchart-horizontal">
-          <div class="flow-node">
-            <div class="flow-icon orange-bg"><i class="fa-solid fa-book-open-reader"></i></div>
-            <h4>1. Đọc kỹ hồ sơ</h4>
-            <p>Phân tích nhật ký ăn uống sinh hoạt của bệnh nhân nhí.</p>
+          <div class="lesson-details">
+            <div class="lesson-subtitle">Vai trò: Chuyên gia tuyên truyền</div>
+            <h3>Tiết 3: Lan Tỏa Sức Khỏe</h3>
+            <p class="desc">Thuyết trình thực địa báo cáo chiến dịch, nghiệm thu và đánh giá chéo sản phẩm y khoa, vinh danh chuyên gia & tốt nghiệp.</p>
           </div>
-          <div class="flow-connector"><i class="fa-solid fa-chevron-right"></i></div>
-          <div class="flow-node">
-            <div class="flow-icon navy-bg"><i class="fa-solid fa-pen-clip"></i></div>
-            <h4>2. Đánh dấu lỗi</h4>
-            <p>Dùng bút màu gạch chân các hành vi thói quen chưa hợp lý.</p>
-          </div>
-          <div class="flow-connector"><i class="fa-solid fa-chevron-right"></i></div>
-          <div class="flow-node">
-            <div class="flow-icon mint-bg"><i class="fa-solid fa-clipboard-question"></i></div>
-            <h4>3. Đưa chẩn đoán</h4>
-            <p>Đối chiếu xem thói quen lỗi thuộc về cột trụ cột sức khỏe nào.</p>
-          </div>
-        </div>
-        
-        <div class="warning-banner glass-panel focus-border">
-          <div class="banner-badge"><i class="fa-solid fa-circle-info"></i> LƯU Ý DÀNH CHO CÁC BÁC SĨ TẬP SỰ</div>
-          <p>Mỗi bác sĩ nhí trong nhóm thảo luận kỹ lưỡng, ghi nhận sự đồng thuận và chuẩn bị lập luận dựa trên bằng chứng khoa học cụ thể trong bệnh án.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 10: Trình bày HĐ2 - Hội chẩn (Báo cáo mẫu tương tác) -->
-    <section class="slide-panel" id="slide-10" data-stage="HĐ2: Trình bày">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 2 &bull; TRÌNH BÀY BÁO CÁO HỘI CHẨN</span>
-        <h2 class="slide-title">Hội Chẩn Trước Hội Đồng</h2>
-      </div>
-      <div class="grid-layout-1-3">
-        <div class="card glass-card">
-          <h3 class="card-headline"><i class="fa-solid fa-comments"></i> NỘI QUY HỘI CHẨN</h3>
-          <p class="description">Đại diện nhóm đứng dậy báo cáo trước lớp. Hội đồng bác sĩ cả lớp lắng nghe và đưa ra phản biện chéo.</p>
-          <div class="report-cons-icon"><i class="fa-solid fa-user-check"></i></div>
-        </div>
-        
-        <!-- Khung báo cáo tương tác -->
-        <div class="card glass-card clean-white focus-border-mint">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-file-signature"></i> MẪU BÁO CÁO HỘI CHẨN (ĐIỀN THÔNG TIN)</h3>
-          
-          <div class="report-script-form">
-            <p><i class="fa-solid fa-quote-left text-mint"></i> Kính thưa Ban Giám Đốc Nova Hospital và Hội đồng bác sĩ:</p>
-            
-            <div class="form-row">
-              <span>Nhóm bác sĩ chúng tôi tiếp nhận bệnh án của bệnh nhân:</span>
-              <select class="form-select" id="report-patient-select">
-                <option value="Linh Anh">Bệnh nhân Linh Anh</option>
-                <option value="Kem">Bệnh nhân Kem</option>
-                <option value="Nam Anh">Bệnh nhân Nam Anh</option>
-              </select>
-            </div>
-            
-            <div class="form-row">
-              <span>Qua thăm khám lâm sàng, chúng tôi phát hiện thói quen chưa hợp lý là:</span>
-              <input type="text" class="form-input" id="report-bad-habit" placeholder="Nhập thói quen lỗi (VD: Thức muộn xem máy tính)">
-            </div>
-            
-            <div class="form-row">
-              <span>Dấu hiệu này ảnh hưởng trực tiếp đến trụ cột sức khỏe:</span>
-              <select class="form-select" id="report-pillar-select">
-                <option value="Dinh dưỡng">Chế độ Dinh Dưỡng</option>
-                <option value="Giấc ngủ">Thói quen Giấc Ngủ</option>
-                <option value="Vận động">Thói quen Vận Động</option>
-              </select>
-            </div>
-            
-            <div class="form-row">
-              <span>Vì vậy, chẩn đoán cuối cùng của chúng tôi cho ca bệnh này là:</span>
-              <input type="text" class="form-input" id="report-diagnosis" placeholder="Nhập chẩn đoán y khoa (VD: Rối loạn nhịp giấc ngủ)">
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 11: Đáp án HĐ2 (Bảng đối chiếu 3D Flip Card) -->
-    <section class="slide-panel" id="slide-11" data-stage="HĐ2: Đáp án">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 2 &bull; PHÂN TÍCH ĐÁP ÁN CHUẨN Y KHOA</span>
-        <h2 class="slide-title">Kết Quả Hội Chẩn Bệnh Nhân</h2>
-      </div>
-      
-      <div class="diagnoses-grid">
-        <!-- Ca 1 -->
-        <div class="flip-card" id="h2-case-1">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="card-head">BỆNH NHÂN LINH ANH</div>
-              <div class="patient-avatar"><img src="patient_linh_anh.png" alt="Linh Anh" class="patient-avatar-img"></div>
-              <p class="description">Ăn nhiều snack, uống nước ngọt thay thế sữa, lười ăn các loại đạm cá thịt.</p>
-              <button class="flip-btn">Xem Chẩn Đoán <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <div class="flip-card-back border-orange">
-              <div class="card-head text-orange">ĐÁP ÁN CHUẨN Y KHOA</div>
-              <h4>THIẾU ĐẠM & CANXI</h4>
-              <p class="back-desc">Cơ thể thiếu hụt các axit amin cốt lõi từ đạm để hình thành đĩa sụn, đồng thời thiếu canxi lắng đọng làm xương chậm kéo dài và dễ giòn.</p>
-              <button class="flip-back-btn"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Ca 2 -->
-        <div class="flip-card" id="h2-case-2">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="card-head">BỆNH NHÂN KEM</div>
-              <div class="patient-avatar"><img src="patient_kem.png" alt="Bạn Kem" class="patient-avatar-img"></div>
-              <p class="description">Thường xuyên bật laptop xem phim, chơi game muộn đến 12h đêm mới đi ngủ.</p>
-              <button class="flip-btn">Xem Chẩn Đoán <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <div class="flip-card-back border-navy">
-              <div class="card-head text-navy">ĐÁP ÁN CHUẨN Y KHOA</div>
-              <h4>RỐI LOẠN GIẤC NGỦ LÂM SÀNG</h4>
-              <p class="back-desc">Thiếu hụt Hormone tăng trưởng (GH). Sóng ánh sáng xanh màn hình ức chế hormone melatonin gây ngủ, cản trở đạt trạng thái ngủ sâu.</p>
-              <button class="flip-back-btn"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Ca 3 -->
-        <div class="flip-card" id="h2-case-3">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="card-head">BỆNH NHÂN NAM ANH</div>
-              <div class="patient-avatar"><img src="patient_nam_anh.png" alt="Nam Anh" class="patient-avatar-img"></div>
-              <p class="description">Hầu như nằm xem điện thoại, lười vận động di chuyển chân tay hàng ngày.</p>
-              <button class="flip-btn">Xem Chẩn Đoán <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <div class="flip-card-back border-mint">
-              <div class="card-head text-mint">ĐÁP ÁN CHUẨN Y KHOA</div>
-              <h4>SUY GIẢM THỂ CHẤT THỤ ĐỘNG</h4>
-              <p class="back-desc">Đĩa sụn tiếp hợp ở các đầu khớp không được kích thích giãn nén thông qua lực nén cơ học sinh ra khi chạy nhảy, làm khớp xương kém linh hoạt.</p>
-              <button class="flip-back-btn"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Ca 4 -->
-        <div class="flip-card" id="h2-case-4">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <div class="card-head">BỆNH NHÂN TIỂU VY</div>
-              <div class="patient-avatar"><img src="patient_vy_vy.png" alt="Vy Vy" class="patient-avatar-img"></div>
-              <p class="description">Ăn nhiều thực phẩm ngọt, thức ăn nhanh nhiều mỡ và lười vận động.</p>
-              <button class="flip-btn">Xem Chẩn Đoán <i class="fa-solid fa-rotate"></i></button>
-            </div>
-            <div class="flip-card-back border-teal">
-              <div class="card-head text-teal">ĐÁP ÁN CHUẨN Y KHOA</div>
-              <h4>BÉO PHÌ & CỐT HÓA SỚM</h4>
-              <p class="back-desc">Trọng lượng cơ thể quá tải nén ép chặt lên đĩa sụn, đồng thời thừa đường tinh luyện kích thích xương kết tinh đóng khớp sụn tăng trưởng sớm.</p>
-              <button class="flip-back-btn"><i class="fa-solid fa-arrow-left"></i> Quay lại</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 12: Tổng kết HĐ2 -->
-    <section class="slide-panel" id="slide-12" data-stage="HĐ2: Tổng kết">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 2 &bull; TỔNG KẾT HỘI CHẨN</span>
-        <h2 class="slide-title">Cơ Chế Khoa Học Ảnh Hưởng Xương</h2>
-      </div>
-      <div class="grid-2-cols">
-        <div class="card glass-card focus-border animate-up">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-circle-nodes"></i> CƠ CHẾ SỰ PHÂN CHIA SỤN</h3>
-          <p class="description" style="margin-top: 15px;">Đĩa sụn tăng trưởng (Epiphyseal plate) nằm ở hai đầu các xương dài. Dưới tác dụng của Hormone tăng trưởng (GH) phối hợp với kích thích co giãn khớp cơ học khi vận động, các tế bào sụn sẽ nhân đôi liên tục, sau đó canxi hóa tạo thành chất xương cứng giúp xương dài ra.</p>
-        </div>
-        <div class="card glass-card animate-up" style="animation-delay: 0.1s;">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-triangle-exclamation"></i> TÁC HẠI CỦA THÓI QUEN XẤU</h3>
-          <p class="description" style="margin-top: 15px;">Thói quen xấu (thức khuya, lười vận động, thiếu dinh dưỡng) làm giảm nồng độ GH tiết ra đồng thời làm đĩa sụn đầu xương sớm bị canxi hóa đóng kín (cốt hóa khớp sụn), chặn đứng vĩnh viễn khả năng phát triển chiều cao tự nhiên của học sinh.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         HOẠT ĐỘNG 3: KÊ ĐƠN (SLIDE 13 - 16)
-         ========================================== -->
-         
-    <!-- Slide 13: Tên Hoạt động 3 -->
-    <section class="slide-panel" id="slide-13" data-stage="HĐ3: Kê đơn">
-      <div class="activity-intro-layout color-green-theme">
-        <div class="intro-badge">HOẠT ĐỘNG 3</div>
-        <h2 class="intro-main-title">KÊ ĐƠN</h2>
-        <div class="intro-sub-card">
-          <span class="sub-label">Tên riêng trên Slide:</span>
-          <h3>KÊ ĐƠN THUỐC</h3>
-        </div>
-        <div class="intro-icon-large"><i class="fa-solid fa-file-prescription"></i></div>
-        <div class="intro-duration"><i class="fa-regular fa-clock"></i> Thời lượng: 12 phút</div>
-      </div>
-    </section>
-
-    <!-- Slide 14: Chuẩn bị HĐ3 -->
-    <section class="slide-panel" id="slide-14" data-stage="HĐ3: Chuẩn bị">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 3 &bull; CHUẨN BỊ KÊ ĐƠN THUỐC</span>
-        <h2 class="slide-title">Chuẩn Bị</h2>
-      </div>
-      <div class="grid-2-cols">
-        <div class="card glass-card focus-border-mint">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-user-group"></i> HÌNH THỨC HOẠT ĐỘNG</h3>
-          <p class="description" style="margin-top: 15px; font-size: 18px;">Hoạt động theo: <strong>Nhóm y khoa 4 người (giữ nguyên nhóm)</strong></p>
-          <div class="illustration-badge"><i class="fa-solid fa-people-carry-box"></i></div>
-        </div>
-        <div class="card glass-card" style="animation-delay: 0.1s;">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-pen-fancy"></i> DỤNG CỤ THIẾT KẾ ĐƠN THUỐC</h3>
-          <ul class="bullet-list" style="margin-top: 15px;">
-            <li>1 tờ giấy trắng khổ A4 (gấp làm đôi để tạo hình đơn thuốc).</li>
-            <li>Bút chì và bút màu trang trí đơn thuốc sinh động.</li>
-            <li>Sách hướng dẫn kiến thức y khoa sơ lược.</li>
+          <ul class="lesson-features">
+            <li><i class="fa-solid fa-circle-check"></i> Game "Ai là chuyên gia thật?"</li>
+            <li><i class="fa-solid fa-circle-check"></i> Diễn tập & Thẩm định chéo theo nhóm</li>
+            <li><i class="fa-solid fa-circle-check"></i> Vinh danh bục 3D & In Chứng nhận tốt nghiệp</li>
           </ul>
         </div>
+        <a href="tiet3.html" class="enter-btn">
+          <span>Bắt đầu Tuyên truyền</span> <i class="fa-solid fa-chevron-right"></i>
+        </a>
       </div>
-    </section>
-
-    <!-- Slide 15: Hướng dẫn HĐ3 + Quy tắc kê đơn + Timer -->
-    <section class="slide-panel" id="slide-15" data-stage="HĐ3: Hướng dẫn">
-      <div class="slide-header-split">
-        <div class="slide-header">
-          <span class="breadcrumb">HOẠT ĐỘNG 3 &bull; HƯỚNG DẪN THỰC HÀNH</span>
-          <h2 class="slide-title">Kê Đơn Điều Trị Phác Đồ</h2>
-        </div>
-        <!-- Timer Widget -->
-        <div class="timer-widget" id="timer-hd3">
-          <div class="timer-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-          <div class="timer-display">12:00</div>
-          <div class="timer-controls">
-            <button class="timer-btn play-btn" title="Bắt đầu"><i class="fa-solid fa-play"></i></button>
-            <button class="timer-btn pause-btn hidden" title="Tạm dừng"><i class="fa-solid fa-pause"></i></button>
-            <button class="timer-btn reset-btn" title="Đặt lại"><i class="fa-solid fa-rotate-left"></i></button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="grid-2-cols">
-        <!-- Flowchart thực hành -->
-        <div class="card glass-card">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-share-nodes"></i> CÁC BƯỚC THỰC HIỆN</h3>
-          <div class="steps-flow-vertical">
-            <div class="vert-step">
-              <span class="step-num-circle">1</span>
-              <p>Thảo luận nhóm để đề xuất giải pháp thiết thực khắc phục thói quen có hại của ca bệnh.</p>
-            </div>
-            <div class="vert-step">
-              <span class="step-num-circle">2</span>
-              <p>Viết nội dung giải pháp vào tờ giấy A4 gấp đôi đóng vai như một đơn thuốc y khoa.</p>
-            </div>
-            <div class="vert-step">
-              <span class="step-num-circle">3</span>
-              <p>Đảm bảo phác đồ kê đơn định lượng hành vi rõ ràng (VD: bao nhiêu ml sữa, mấy giờ ngủ).</p>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Quy tắc thiết kế giải pháp -->
-        <div class="card glass-card focus-border-mint">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-certificate"></i> QUY TẮC KÊ ĐƠN THUỐC (3 TRỤ CỘT)</h3>
-          <p class="description">Đơn thuốc của các nhóm bác sĩ cần thiết kế tuân thủ nghiêm ngặt công thức y học thực tiễn sau:</p>
-          
-          <div class="rule-box-layout">
-            <div class="rule-node">
-              <span class="rule-label orange-bg">VẤN ĐỀ PHÁT HIỆN</span>
-              <p>Ghi nhận rõ thói quen sinh hoạt xấu nào cần cải thiện.</p>
-            </div>
-            <div class="rule-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="rule-node">
-              <span class="rule-label navy-bg">GIẢI PHÁP ĐỊNH LƯỢNG</span>
-              <p>Đề xuất giải pháp bằng những con số hành vi đo lường được.</p>
-            </div>
-            <div class="rule-arrow"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="rule-node">
-              <span class="rule-label mint-bg">CAM KẾT THỰC HIỆN</span>
-              <p>Kế hoạch đôn đốc giám sát theo dõi thói quen hàng ngày.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 16: Tổng kết HĐ3 (Kiến thức y khoa định lượng Infographic) -->
-    <section class="slide-panel" id="slide-16" data-stage="HĐ3: Tổng kết">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 3 &bull; TỔNG KẾT Y KHOA ĐỊNH LƯỢNG</span>
-        <h2 class="slide-title">Cơ Sở Kiến Thức Y Khoa Chuẩn</h2>
-      </div>
-      
-      <div class="infographic-3-cols">
-        <!-- Dinh dưỡng -->
-        <div class="info-column-card border-orange-top">
-          <div class="info-card-header orange-bg">
-            <span class="info-emoji">🥗</span>
-            <h4>DINH DƯỠNG ĐỊNH LƯỢNG</h4>
-          </div>
-          <div class="info-card-body">
-            <div class="info-stat-box">
-              <span class="stat-num text-orange">> 500ml</span>
-              <span class="stat-label">Sữa tươi hoặc sữa bột mỗi ngày</span>
-            </div>
-            <p class="stat-desc">Uống đầy đủ hàng ngày để nạp đủ 600-800mg Canxi. Đồng thời bổ sung 2 quả trứng, 100g thịt nạc để cung cấp chuỗi peptide cho khung collagen đệm xương.</p>
-          </div>
-        </div>
-        
-        <!-- Giấc ngủ -->
-        <div class="info-column-card border-navy-top">
-          <div class="info-card-header navy-bg">
-            <span class="info-emoji">😴</span>
-            <h4>GIẤC NGỦ ĐỊNH LƯỢNG</h4>
-          </div>
-          <div class="info-card-body">
-            <div class="info-stat-box">
-              <span class="stat-num text-navy">Trước 22h</span>
-              <span class="stat-label">Thời điểm lên giường đi ngủ</span>
-            </div>
-            <p class="stat-desc">Để cơ thể chìm vào trạng thái ngủ sâu trước 23h. Kéo dài giấc ngủ liên tục 8 - 9 tiếng mỗi đêm giúp kích hoạt sản sinh 4 lần Hormone tăng trưởng (GH).</p>
-          </div>
-        </div>
-        
-        <!-- Vận động -->
-        <div class="info-column-card border-mint-top">
-          <div class="info-card-header mint-bg">
-            <span class="info-emoji">🏃</span>
-            <h4>VẬN ĐỘNG ĐỊNH LƯỢNG</h4>
-          </div>
-          <div class="info-card-body">
-            <div class="info-stat-box">
-              <span class="stat-num text-mint">> 30 phút</span>
-              <span class="stat-label">Vận động cường độ cao mỗi ngày</span>
-            </div>
-            <p class="stat-desc">Tập luyện các môn bật nhảy (Nhảy dây 200 cái, Bóng rổ, Xà đơn, Bơi lội) tạo các vi chấn thương lực lành mạnh ở đĩa sụn, kích thích các mô đĩa sụn tiếp tục dài ra.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==========================================
-         HOẠT ĐỘNG 4: SỔ TAY BÁC SĨ (SLIDE 17 - 20)
-         ========================================== -->
-         
-    <!-- Slide 17: Tên Hoạt động 4 -->
-    <section class="slide-panel" id="slide-17" data-stage="HĐ4: Sổ tay bác sĩ">
-      <div class="activity-intro-layout color-navy-theme">
-        <div class="intro-badge">HOẠT ĐỘNG 4</div>
-        <h2 class="intro-main-title">SỔ TAY BÁC SĨ</h2>
-        <div class="intro-sub-card">
-          <span class="sub-label">Tên riêng trên Slide:</span>
-          <h3>NHẬT KÝ BÁC SĨ</h3>
-        </div>
-        <div class="intro-icon-large"><i class="fa-solid fa-book-medical"></i></div>
-        <div class="intro-duration"><i class="fa-regular fa-clock"></i> Thời lượng: 8 - 10 phút</div>
-      </div>
-    </section>
-
-    <!-- Slide 18: Chuẩn bị HĐ4 -->
-    <section class="slide-panel" id="slide-18" data-stage="HĐ4: Chuẩn bị">
-      <div class="slide-header">
-        <span class="breadcrumb">HOẠT ĐỘNG 4 &bull; CHUẨN BỊ LÀM NHẬT KÝ</span>
-        <h2 class="slide-title">Chuẩn Bị</h2>
-      </div>
-      <div class="grid-2-cols">
-        <div class="card glass-card focus-border">
-          <h3 class="card-headline text-navy"><i class="fa-solid fa-user-pen"></i> THỰC HÀNH CÁ NHÂN ĐỘC LẬP</h3>
-          <p class="description" style="margin-top: 15px; font-size: 18px;">Hoạt động theo: <strong>Cá nhân từng học sinh tự làm sổ tay</strong></p>
-          <div class="illustration-badge"><i class="fa-solid fa-pen-nib"></i></div>
-        </div>
-        <div class="card glass-card" style="animation-delay: 0.1s;">
-          <h3 class="card-headline text-mint"><i class="fa-solid fa-shapes"></i> DỤNG CỤ GẤP SỔ TAY</h3>
-          <ul class="bullet-list" style="margin-top: 15px;">
-            <li>1 tờ giấy trắng khổ A4 (Gấp làm 4 hoặc làm 8 để tạo cuốn sổ nhỏ).</li>
-            <li>Bút viết, Bút chì hoặc Bút vẽ chì màu trang trí.</li>
-            <li>Ý thức tự nhìn nhận thói quen sinh hoạt bản thân.</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 19: Hướng dẫn HĐ4 + Virtual Book + Timer -->
-    <section class="slide-panel" id="slide-19" data-stage="HĐ4: Hướng dẫn">
-      <div class="slide-header-split">
-        <div class="slide-header">
-          <span class="breadcrumb">HOẠT ĐỘNG 4 &bull; HƯỚNG DẪN VIẾT SỔ TAY</span>
-          <h2 class="slide-title">Viết Báo Cáo Phản Hồi & Cam Kết</h2>
-        </div>
-        <!-- Timer Widget -->
-        <div class="timer-widget" id="timer-hd4">
-          <div class="timer-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-          <div class="timer-display">08:00</div>
-          <div class="timer-controls">
-            <button class="timer-btn play-btn" title="Bắt đầu"><i class="fa-solid fa-play"></i></button>
-            <button class="timer-btn pause-btn hidden" title="Tạm dừng"><i class="fa-solid fa-pause"></i></button>
-            <button class="timer-btn reset-btn" title="Đặt lại"><i class="fa-solid fa-rotate-left"></i></button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="grid-layout-1-3">
-        <!-- 3 câu hỏi gợi ý -->
-        <div class="card glass-card">
-          <h3 class="card-headline"><i class="fa-solid fa-lightbulb"></i> GỢI Ý SUY NGẪM</h3>
-          <ol class="ordered-list" style="margin-top: 15px;">
-            <li style="margin-bottom: 8px;"><strong>Trang 1:</strong> Bài học tâm đắc nhất ngày hôm nay là gì?</li>
-            <li style="margin-bottom: 8px;"><strong>Trang 2:</strong> Điều gì khiến em bất ngờ hoặc thay đổi quan điểm cũ?</li>
-            <li style="margin-bottom: 8px;"><strong>Trang 3:</strong> Lời khuyên vàng em muốn chia sẻ dưới cương vị Bác sĩ khoa nhi?</li>
-          </ol>
-          <p class="warning-note" style="margin-top: 10px;"><i class="fa-solid fa-signature"></i> <strong>Trang Cuối Sổ:</strong> Tự thiết kế bản cam kết thói quen lành mạnh của em.</p>
-        </div>
-        
-        <!-- Cuốn sổ tay ảo gấp đôi cho phép điền tương tác -->
-        <div class="virtual-notebook-layout">
-          <div class="virtual-book">
-            <!-- Trang trái: Reflection -->
-            <div class="book-page left-page">
-              <div class="page-header">📓 NHẬT KÝ BÁC SĨ - TRANG REFLECTION</div>
-              <div class="page-field">
-                <label for="v-ref-q1">1. Bài học cốt lõi tâm đắc nhất:</label>
-                <textarea id="v-ref-q1" placeholder="Nhập suy ngẫm về 3 yếu tố..."></textarea>
-              </div>
-              <div class="page-field">
-                <label for="v-ref-q2">2. Điều khiến em bất ngờ nhất:</label>
-                <textarea id="v-ref-q2" placeholder="Nhập điều bất ngờ y khoa..."></textarea>
-              </div>
-              <div class="page-field">
-                <label for="v-ref-q3">3. Lời khuyên bác sĩ trưởng khoa:</label>
-                <textarea id="v-ref-q3" placeholder="Lời khuyên sức khỏe cho các bạn..."></textarea>
-              </div>
-            </div>
-            
-            <!-- Trang phải: Cam kết cá nhân -->
-            <div class="book-page right-page">
-              <div class="page-header">📝 BẢN CAM KẾT HÀNH ĐỘNG CÁ NHÂN</div>
-              <p class="page-desc">Tích chọn để cam kết thực hiện thói quen tốt cho bản thân:</p>
-              
-              <div class="commit-list-v">
-                <label class="commit-item-v">
-                  <input type="checkbox" class="v-commit-cb" id="v-commit-sleep">
-                  <span class="commit-box-v"></span>
-                  <div class="commit-text-v">
-                    <strong>Ngủ sớm trước 22h đêm hàng ngày</strong>
-                  </div>
-                </label>
-                <label class="commit-item-v">
-                  <input type="checkbox" class="v-commit-cb" id="v-commit-milk">
-                  <span class="commit-box-v"></span>
-                  <div class="commit-text-v">
-                    <strong>Uống đủ 500ml sữa để bổ sung Canxi</strong>
-                  </div>
-                </label>
-                <label class="commit-item-v">
-                  <input type="checkbox" class="v-commit-cb" id="v-commit-ex">
-                  <span class="commit-box-v"></span>
-                  <div class="commit-text-v">
-                    <strong>Vận động nhảy dây/thể thao >30 phút</strong>
-                  </div>
-                </label>
-              </div>
-              
-              <div class="progress-bar-container-v">
-                <div class="progress-label-v">
-                  <span>Mức độ cam kết của em:</span>
-                  <span id="v-commit-pct">0%</span>
-                </div>
-                <div class="progress-track">
-                  <div class="progress-fill" id="v-commit-progress-fill"></div>
-                </div>
-              </div>
-              
-              <div class="signature-box">
-                <span class="sig-label">Chữ ký Bác sĩ nhí:</span>
-                <span class="sig-line" id="v-sig-display">Bác Sĩ Tập Sự</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="save-indicator" id="v-save-status">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Tự động sao lưu nhật ký y khoa của bác sĩ.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Slide 20: Chúc mừng & Cấp chứng nhận bác sĩ dinh dưỡng nhí -->
-    <section class="slide-panel" id="slide-20" data-stage="Cấp chứng nhận">
-      <div class="grid-2-cols" style="align-items: center;">
-        
-        <!-- Cột trái: Form điều khiển -->
-        <div class="card glass-card focus-border-mint" style="padding: 25px; height: 100%; justify-content: center;">
-          <div class="department-tag" style="margin-bottom: 5px;"><i class="fa-solid fa-medal"></i> HOÀN THÀNH CA TRỰC</div>
-          <h2 class="slide-title" style="font-size: 26px; line-height: 1.2; margin-bottom: 15px; color: var(--accent-navy);">CẤP CHỨNG NHẬN Y KHOA</h2>
-          <p class="description" style="margin-bottom: 20px; font-size: 13.5px;">Điền tên học sinh dưới đây để cấp chứng chỉ danh giá của Hội đồng Đào tạo Lâm sàng Bệnh viện Nova Hospital.</p>
-          
-          <div class="form-row-vertical" style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;">
-            <label for="cert-student-name" style="font-family: var(--font-accent); font-weight: 700; font-size: 13px; color: var(--accent-navy);">TÊN BÁC SĨ NHÍ TẬP SỰ:</label>
-            <input type="text" id="cert-student-name" placeholder="Nhập họ và tên học sinh..." class="form-input" style="width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); border: 1.5px solid var(--panel-border); font-family: var(--font-main); font-size: 15px; font-weight: 600;">
-          </div>
-          
-          <div style="display: flex; flex-direction: column; gap: 12px;">
-            <button id="btn-generate-cert" class="start-lecture-btn" style="width: 100%; justify-content: center; background: var(--accent-mint);">
-              <i class="fa-solid fa-stamp"></i> CẤP & IN CHỨNG NHẬN
-            </button>
-            <button class="start-lecture-btn" id="restart-btn" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.08); color: var(--text-main); border: 1.5px solid var(--panel-border);">
-              <i class="fa-solid fa-rotate-left"></i> Khởi động lại ca học
-            </button>
-          </div>
-        </div>
-        
-        <!-- Cột phải: Live Preview của Certificate -->
-        <div class="cert-preview-container" style="display: flex; justify-content: center; align-items: center;">
-          <div class="certificate-badge-card" id="cert-preview-element">
-            <div class="cert-border-outer">
-              <div class="cert-border-inner">
-                <div class="cert-header">HỘI ĐỒNG ĐÀO TẠO LÂM SÀNG BỆNH VIỆN NOVA HOSPITAL</div>
-                <div class="cert-main-title">CHỨNG NHẬN</div>
-                <div class="cert-sub-title">BÁC SĨ DINH DƯỠNG NHÍ</div>
-                <div class="cert-award-text">Chứng nhận Bác sĩ Tập sự xuất sắc:</div>
-                <div class="cert-student-display-name" id="cert-preview-name">[ Họ và tên học sinh ]</div>
-                <div class="cert-description-text">
-                  Đã hoàn thành xuất sắc ca trực lâm sàng đầu tiên của khoa nhi<br>
-                  Chuyên đề: <strong>PHÁT TRIỂN CHIỀU CAO TỐI ƯU</strong><br>
-                  Cam kết duy trì 3 yếu tố cốt lõi: Dinh dưỡng đủ chất - Ngủ sớm trước 22h - Vận động hàng ngày.
-                </div>
-                
-                <div class="cert-signatures-row">
-                  <div class="cert-sig-block">
-                    <span class="sig-title">BÁC SĨ TRƯỞNG KHOA</span>
-                    <span class="sig-name">Dr. Nova</span>
-                  </div>
-                  <div class="cert-sig-block stamp-relative">
-                    <span class="sig-title">BAN GIÁM ĐỐC NOVA HOSPITAL</span>
-                    <span class="sig-name">Đã ký & Đóng dấu</span>
-                    <img src="hospital_stamp.png" alt="Con dấu bệnh viện" class="hospital-stamp-preview">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-    </section>
-
+    </div>
   </main>
 
-  <!-- Giao diện in ấn chứng chỉ ẩn (chỉ hiển thị khi in) -->
-  <div id="printable-cert" class="print-only-container">
-    <div class="printable-certificate">
-      <div class="cert-border-outer">
-        <div class="cert-border-inner">
-          <div class="cert-header">HỘI ĐỒNG ĐÀO TẠO LÂM SÀNG BỆNH VIỆN NOVA HOSPITAL</div>
-          <div class="cert-main-title">CHỨNG NHẬN</div>
-          <div class="cert-sub-title">BÁC SĨ DINH DƯỠNG NHÍ</div>
-          <div class="cert-award-text">Chứng nhận Bác sĩ Tập sự xuất sắc:</div>
-          <div class="cert-student-display-name" id="cert-print-name">[ Họ và tên học sinh ]</div>
-          <div class="cert-description-text">
-            Đã hoàn thành xuất sắc ca trực lâm sàng đầu tiên của khoa nhi<br>
-            Chuyên đề: <strong>PHÁT TRIỂN CHIỀU CAO TỐI ƯU</strong><br>
-            Cam kết duy trì 3 yếu tố cốt lõi: Dinh dưỡng đủ chất - Ngủ sớm trước 22h - Vận động hàng ngày.
-          </div>
-          
-          <div class="cert-signatures-row">
-            <div class="cert-sig-block">
-              <span class="sig-title">BÁC SĨ TRƯỞNG KHOA</span>
-              <span class="sig-name">Dr. Nova</span>
-            </div>
-            <div class="cert-sig-block stamp-relative">
-              <span class="sig-title">BAN GIÁM ĐỐC NOVA HOSPITAL</span>
-              <span class="sig-name">Đã ký & Đóng dấu</span>
-              <img src="hospital_stamp.png" alt="Con dấu bệnh viện" class="hospital-stamp-preview">
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- App Controls (Thanh điều hướng slide) -->
-  <footer class="app-controls">
-    <div class="control-left">
-      <span class="slide-indicator" id="slide-index-display">Slide 1 / 20</span>
-      <span class="slide-stage-name" id="slide-stage-display">Bắt đầu</span>
-    </div>
-    
-    <div class="control-center">
-      <button class="control-btn" id="prev-slide-btn" title="Slide trước (Mũi tên Trái)">
-        <i class="fa-solid fa-arrow-left"></i>
-      </button>
-      <div class="slide-progress-dots" id="progress-dots-container">
-        <!-- Tạo tự động bằng JS -->
-      </div>
-      <button class="control-btn" id="next-slide-btn" title="Slide tiếp (Mũi tên Phải/Space)">
-        <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </div>
-    
-    <div class="control-right">
-      <span class="keyboard-tip"><i class="fa-solid fa-keyboard"></i> Sử dụng phím &larr; &rarr;</span>
-    </div>
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>&copy; 2026 Nova Hospital &bull; Học viện Bác sĩ nhí &bull; Đã đăng ký bản quyền sản phẩm truyền thông</p>
   </footer>
-
-  <script src="app.js"></script>
 </body>
 </html>
