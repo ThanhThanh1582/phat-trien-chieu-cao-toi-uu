@@ -16,7 +16,7 @@
   
   <style>
     :root {
-      --bg-dark: linear-gradient(135deg, #f0f4f8 0%, #cbd5e1 100%);
+      --bg-dark: linear-gradient(135deg, rgba(240, 244, 248, 0.88) 0%, rgba(203, 213, 225, 0.88) 100%), url('hospital_blur_bg.png') no-repeat center center fixed;
       --bg-card: rgba(255, 255, 255, 0.85);
       --bg-card-hover: rgba(255, 255, 255, 1);
       --text-main: #0f172a;
@@ -41,6 +41,7 @@
 
     body {
       background: var(--bg-dark);
+      background-size: cover;
       color: var(--text-main);
       font-family: var(--font-main);
       min-height: 100vh;
@@ -201,9 +202,22 @@
 
     .lesson-card:hover {
       transform: translateY(-8px);
-      border-color: var(--panel-border-hover);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 0 30px rgba(0, 128, 128, 0.05);
       background: var(--bg-card-hover);
+    }
+
+    .lesson-card.card-tiet1:hover {
+      border-color: rgba(59, 130, 246, 0.45);
+      box-shadow: 0 20px 45px rgba(59, 130, 246, 0.15), 0 0 30px rgba(59, 130, 246, 0.08);
+    }
+
+    .lesson-card.card-tiet2:hover {
+      border-color: rgba(0, 128, 128, 0.45);
+      box-shadow: 0 20px 45px rgba(0, 128, 128, 0.15), 0 0 30px rgba(0, 128, 128, 0.08);
+    }
+
+    .lesson-card.card-tiet3:hover {
+      border-color: rgba(229, 62, 62, 0.45);
+      box-shadow: 0 20px 45px rgba(229, 62, 62, 0.15), 0 0 30px rgba(229, 62, 62, 0.08);
     }
 
     .lesson-meta {
